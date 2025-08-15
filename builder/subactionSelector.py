@@ -1,7 +1,6 @@
-from Tkinter import *
+from tkinter import *
+from tkinter import filedialog, ttk
 import os
-from tkFileDialog import askopenfile, askdirectory
-import ttk
 import settingsManager
 
 class Selector(Label):
@@ -182,12 +181,12 @@ class ChangeAttributeFrame(Frame):
     
     def pickFile(self,_resultVar, _filetype='file', _extensions=[]):
         if _filetype == 'file':
-            loaded_file = askopenfile(mode="r",
+            loaded_file = filedialog.askopenfile(mode="r",
                                initialdir=settingsManager.createPath('fighters'),
                                filetypes=_extensions)
             loaded_name = loaded_file.name
         elif _filetype == 'dir':
-            loaded_name = askdirectory(initialdir=settingsManager.createPath(''))
+            loaded_name = filedialog.askdirectory(initialdir=settingsManager.createPath(''))
         res = os.path.relpath(loaded_name,os.path.dirname(self.root.root.fighter_file.name))
         _resultVar.set(res)
         

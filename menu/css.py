@@ -1,14 +1,14 @@
 import settingsManager
 import spriteManager
 import os
-import imp
+import importlib as imp
 import pygame
 import battle
 import sys
 import stages.true_arena as stage
 import engine.cpuPlayer as cpuPlayer
 import engine.abstractFighter as abstractFighter
-import sss
+from . import sss
 import musicManager
 
 class CSSScreen():

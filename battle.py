@@ -20,7 +20,7 @@ import engine.network as network
 
 from collections import namedtuple
 
-from cgi import log
+import logging
 from PIL.SpiderImagePlugin import isInt
 
 """
@@ -28,6 +28,14 @@ The battle object actually creates the fight and plays it out on screen.
 It calls the update function of all of the fighters and the stage, and draws them.
 It takes a Rules object (see below), a list of players, and a stage.
 """
+logging.basicConfig(
+    filename='battle.log',  # You can change this to any path
+    level=logging.DEBUG,    # Use INFO or WARNING for less verbosity
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
+def log(message):
+    logging.debug(message)
 class Battle():
     def __init__(self,_rules,_players,_stage,_randomSeed=None):
         self.settings = settingsManager.getSetting().setting

@@ -1,9 +1,7 @@
-from Tkinter import *
+from tkinter import *
+from tkinter import filedialog, messagebox
 import settingsManager
-from idlelib.ObjectBrowser import _object_browser
-from tkFileDialog import askopenfile,askdirectory
 import os
-import tkMessageBox
 import engine.action
 import inspect
 
@@ -246,7 +244,7 @@ class ImageLine(dataLine):
     
     def loadImage(self):
         if self.target_object:
-            imgfile = askopenfile(mode="r",initialdir=self.target_object.base_dir,filetypes=[('Image Files','*.png')])
+            imgfile = filedialog.askopenfile(mode="r",initialdir=self.target_object.base_dir,filetypes=[('Image Files','*.png')])
             self.image_data.set(os.path.relpath(imgfile.name, self.target_object.base_dir))
 
 class DirLine(dataLine):
@@ -285,7 +283,7 @@ class DirLine(dataLine):
     
     def loadDir(self):
         if self.target_object:
-            directory = askdirectory(initialdir=self.target_object.base_dir)
+            directory = filedialog.askdirectory(initialdir=self.target_object.base_dir)
             self.dir_data.set(os.path.relpath(directory, self.target_object.base_dir))
 
 class ModuleLine(dataLine):
@@ -324,7 +322,7 @@ class ModuleLine(dataLine):
     
     def loadImage(self):
         if self.target_object:
-            modulefile = askopenfile(mode="r",initialdir=self.target_object.base_dir,filetypes=[('TUSSLE ActionScript files','*.xml'),('Python Files','*.py')])
+            modulefile = filedialog.askopenfile(mode="r",initialdir=self.target_object.base_dir,filetypes=[('TUSSLE ActionScript files','*.xml'),('Python Files','*.py')])
             self.module_data.set(os.path.relpath(modulefile.name, self.target_object.base_dir))
 
 class NumLine(dataLine):

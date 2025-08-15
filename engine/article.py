@@ -5,7 +5,7 @@ import random
 import settingsManager
 import engine.hitbox as hitbox
 import engine.collisionBox as collisionBox
-import subaction
+from . import subaction
 import numpy
 
 """
@@ -85,7 +85,7 @@ class DynamicArticle():
             if hbox not in self.owner.active_hitboxes:
                 self.owner.active_hitboxes.add(hbox)
 
-        if self.sprite_rate is not 0:
+        if self.sprite_rate != 0:
             if self.sprite_rate < 0:
                 self.sprite.getImageAtIndex((self.frame // self.sprite_rate)-1)
             else:
@@ -147,7 +147,7 @@ class DynamicArticle():
             if isinstance(act, animation_actions):
                 act.execute(self,self)
         
-        if self.sprite_rate is not 0:
+        if self.sprite_rate != 0:
             if self.sprite_rate < 0:
                 self.sprite.getImageAtIndex((self.frame // self.sprite_rate)-1)
             else:
@@ -241,7 +241,7 @@ class DynamicArticle():
         self.updatePosition()
         self.ecb.normalize()
 
-        if to_bounce_block is not None and 'bounces' in self.tags:
+        if to_bounce_block != None and 'bounces' in self.tags:
             if 'elasticity' in self.variables:
                 self.elasticity = self.variables['elasticity']
             else:
@@ -527,7 +527,7 @@ class AnimatedArticle():
     
     def update(self):
         self.sprite.updatePosition(self.posx, self.posy)
-        if self.sprite_rate is not 0:
+        if self.sprite_rate != 0:
             if self.sprite_rate < 0:
                 self.sprite.getImageAtIndex((self.frame // self.sprite_rate)-1)
             else:

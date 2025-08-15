@@ -3,13 +3,13 @@ import pygame.constants
 import re
 import os
 import sys
-import imp
+import importlib as imp
 import engine.controller
 import math
 try:
-    from configparser import SafeConfigParser
+    from configparser import ConfigParser
 except ImportError:
-    from ConfigParser import SafeConfigParser
+    from configparser import ConfigParser
 
 
 settings = None
@@ -131,7 +131,7 @@ class Settings():
                 self.key_name_map[name.lower()] = value
         
         
-        self.parser = SafeConfigParser()
+        self.parser = ConfigParser()
         if getattr(sys, 'frozen', False):
             # The application is frozen
             self.datadir = os.path.dirname(sys.executable)
@@ -197,7 +197,7 @@ class Settings():
         
         
     def loadGameSettings(self,_presetSuf):
-        preset_parser = SafeConfigParser()
+        preset_parser = ConfigParser()
         preset_parser.read(os.path.join(os.path.join(self.datadir.replace('main.exe','').replace('main.exe',''),'settings/rules',),_presetSuf+'.ini'))
         
         preset = 'preset_' + _presetSuf
@@ -258,7 +258,7 @@ class Settings():
                     timing_window[key] = int(self.parser.get(group_name,key))
             
             for opt in self.parser.options(group_name):
-                if self.key_name_map.has_key(opt):
+                if opt in self.key_name_map:
                     bindings[self.key_name_map[opt]] = self.parser.get(group_name, opt)
             
             self.setting[group_name] = engine.controller.Controller(bindings,timing_window)
@@ -271,7 +271,7 @@ class Settings():
     """
     def loadGamepad(self,_controllerName):
         pygame.joystick.init()
-        controller_parser = SafeConfigParser()
+        controller_parser = ConfigParser()
         controller_parser.read(os.path.join(os.path.join(self.datadir.replace('main.exe',''),'settings'),'gamepads.ini'))
         if controller_parser.has_section(_controllerName):
             joystick = None
@@ -319,7 +319,7 @@ class Settings():
             return engine.controller.GamepadController(pad_bindings)
     
     def getGamepadList(self,_store=False):
-        controller_parser = SafeConfigParser()
+        controller_parser = ConfigParser()
         controller_parser.read(os.path.join(os.path.join(self.datadir.replace('main.exe',''),'settings'),'gamepads.ini'))
         controller_list = []
         
@@ -349,7 +349,7 @@ def saveSettings(_settings):
             key_id_map[value] = name
             key_nameMap[name] = value
     
-    parser = SafeConfigParser()
+    parser = ConfigParser()
     
     parser.add_section('window')
     parser.set('window','windowName',str(_settings['windowName']))
@@ -394,7 +394,7 @@ def saveSettings(_settings):
     saveGamepad(_settings)
 
 def saveGamepad(_settings):
-    parser = SafeConfigParser()
+    parser = ConfigParser()
     for controller_name in getSetting().getGamepadList():
         gamepad = getSetting(controller_name)
         if not parser.has_section(controller_name):
@@ -414,7 +414,7 @@ def saveGamepad(_settings):
 
         
 def savePreset(_settings, _preset):
-    parser = SafeConfigParser()
+    parser = ConfigParser()
     
     parser.set(_preset,'gravityMultiplier',_settings['gravity'] * 100)
     parser.set(_preset,'weightMultiplier',_settings['weight'] * 100)

@@ -1,5 +1,5 @@
 from engine.subaction import *
-from Tkinter import *
+from tkinter import *
 
 class applyHitstop(SubAction):
     subact_group = 'Behavior'

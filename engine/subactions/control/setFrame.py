@@ -1,5 +1,5 @@
 from engine.subaction import *
-from Tkinter import *
+from tkinter import *
 
 # Change the frame of the action to a value.
 class changeActionFrame(SubAction):

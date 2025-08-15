@@ -70,7 +70,7 @@ class GameServer(object):
             if(addr != player):
               self.send(msg, player)
         else:
-          print "Unknown message: {0},{1}".format(msg,addr)
+          print ("Unknown message: {0},{1}".format(msg,addr))
       elif cmd == "p":#client is progressing to frame X
         evtSplit = msg.split("_")
         self.status = evtSplit[0]
@@ -92,7 +92,7 @@ class GameServer(object):
           #TODO: if len(self.players==0), exit server
           #TODO: close TCP connections
       else:
-        print "Unexpected: {0}".format(msg)
+        print ("Unexpected: {0}".format(msg))
   
   def process(self):
     readable, writable, exceptional = (
@@ -138,7 +138,7 @@ class GameServer(object):
     
   
   def run(self):
-    print "Staring Server"
+    print ("Staring Server")
     while True:
       self.process()
       if(self.DEBUG_ENABLED):

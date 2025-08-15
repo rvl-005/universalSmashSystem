@@ -2,8 +2,7 @@ from engine.subaction import *
 
 class transitionState(SubAction):
     subact_group = 'Control'
-    fields = [NodeMap('transition','string','transitionState','')
-              ]
+    fields = [NodeMap('transition','string','transitionState','')]
     
     def __init__(self,_transition=''):
         SubAction.__init__(self)
@@ -11,7 +10,7 @@ class transitionState(SubAction):
     
     def execute(self, _action, _actor):
         SubAction.execute(self, _action, _actor)
-        if baseActions.state_dict.has_key(self.transition):
+        if self.transition in baseActions.state_dict:
             baseActions.state_dict[self.transition](_actor)
     
     def getPropertiesPanel(self, _root):

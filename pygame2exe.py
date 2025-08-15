@@ -11,7 +11,7 @@
  
  
 try:
-    from distutils.core import setup
+    from setuptools import setup
     import py2exe, pygame
     from modulefinder import Module
     import glob, fnmatch
@@ -169,4 +169,4 @@ if __name__ == '__main__':
     if operator.lt(len(sys.argv), 2):
         sys.argv.append('py2exe')
     BuildExe().run() #Run generation
-    raw_input("Press any key to continue") #Pause to let user see that things ends 
+    input("Press any key to continue") #Pause to let user see that things ends 

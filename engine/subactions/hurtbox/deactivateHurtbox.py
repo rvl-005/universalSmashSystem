@@ -2,8 +2,7 @@ from engine.subaction import *
 
 class deactivateHurtbox(SubAction):
     subact_group = 'Hurtbox'
-    fields = [NodeMap('hurtbox_name','string','deactivateHurtbox','')
-              ]
+    fields = [NodeMap('hurtbox_name','string','deactivateHurtbox','')]
     
     def __init__(self,_hurtboxName=''):
         SubAction.__init__(self)
@@ -11,7 +10,7 @@ class deactivateHurtbox(SubAction):
     
     def execute(self, _action, _actor):
         SubAction.execute(self, _action, _actor)
-        if _action.hurtboxes.has_key(self.hurtbox_name):
+        if self.hurtbox_name in _action.hurtboxes:
             _action.hurtboxes[self.hurtbox_name].kill()
     
     def getPropertiesPanel(self, _root):

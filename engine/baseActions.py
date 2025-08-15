@@ -1759,12 +1759,12 @@ class BaseAttack(action.Action):
         
     def tearDown(self, _actor, _nextAction):
         action.Action.tearDown(self, _actor, _nextAction)
-        for _,hitbox in self.hitboxes.iteritems():
+        for _,hitbox in self.hitboxes.iter():
             hitbox.kill()
     
     def onClank(self, _actor, _hitbox, _other):
         action.Action.onClank(self, _actor, _hitbox, _other)
-        for _,hitbox in self.hitboxes.iteritems():
+        for _,hitbox in self.hitboxes.iter():
             hitbox.kill()
 
     def stateTransitions(self, _actor):
@@ -1792,7 +1792,7 @@ class AirAttack(BaseAttack):
             self.fastfall_frame = None
     
     def onClank(self, _actor, _hitbox, _other):
-        for _,hitbox in self.hitboxes.iteritems():
+        for _,hitbox in self.hitboxes.iter():
             hitbox.kill()
                     
     def stateTransitions(self, _actor):

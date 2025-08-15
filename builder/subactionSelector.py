@@ -206,7 +206,7 @@ class BasePropertiesFrame(Frame):
         return self.variable_list[_name]
     
     def initVars(self):
-        for (val,var) in self.variable_list.iteritems():
+        for (val,var) in self.variable_list.iter():
             var.set(getattr(self.subaction,val))
             var.trace('w',lambda name1, name2, op, variable=var, varname=val: self.variableChanged(variable, varname, name1, name2, op))
                 
@@ -425,7 +425,7 @@ class ChangeSpeedProperties(BasePropertiesFrame):
             self.root.root.actionModified()
             
     def initVars(self):
-        for (val,var) in self.variable_list.iteritems():
+        for (val,var) in self.variable_list.iter():
             newval = getattr(self.subaction,val)
             if newval is None: var.set(0)
             else: var.set(newval)
@@ -519,7 +519,7 @@ class ShiftPositionProperties(BasePropertiesFrame):
             self.root.root.actionModified()
             
     def initVars(self):
-        for (val,var) in self.variable_list.iteritems():
+        for (val,var) in self.variable_list.iter():
             newval = getattr(self.subaction,val)
             if newval is None: var.set(0)
             else: var.set(newval)
@@ -604,7 +604,7 @@ class ShiftSpriteProperties(BasePropertiesFrame):
             self.root.root.actionModified()
             
     def initVars(self):
-        for (val,var) in self.variable_list.iteritems():
+        for (val,var) in self.variable_list.iter():
             newval = getattr(self.subaction,val)
             if newval is None: var.set(0)
             else: var.set(newval)
@@ -709,7 +709,7 @@ class ModifyHitboxProperties(BasePropertiesFrame):
         BasePropertiesFrame.__init__(self, _root, _subaction)
         
         import engine
-        if _root.getAction().hitboxes.has_key(self.subaction.hitbox_name):
+        if self.subaction.hitbox_name in _root.getAction().hitboxes:
             self.hitbox = _root.getAction().hitboxes[self.subaction.hitbox_name]
         else: self.hitbox = engine.hitbox.Hitbox(_root.getFighter(),engine.hitbox.HitboxLock())
         self.variable_list = []
@@ -791,7 +791,7 @@ class ModifyHitboxProperties(BasePropertiesFrame):
             var.trace('w',lambda name1, name2, op, variable=var, varname=val: self.variableChanged(variable, varname, name1, name2, op,))
             
     def populateHitboxVariable(self,_variable):
-        if self.subaction.hitbox_vars.has_key(_variable):
+        if _variable in self.subaction.hitbox_vars:
             return self.subaction.hitbox_vars[_variable]
         else: return getattr(self.hitbox,_variable)
     
@@ -888,10 +888,10 @@ class HitboxPropertiesFrame(ttk.Frame):
         self.subaction.hitbox_name = new_name
         
         #we need something in the action so that we can select it from a dropdown later
-        if not self.parent.root.getAction().hitboxes.has_key(new_name): #Set our working Hitbox to the action
+        if new_name not in self.parent.root.getAction().hitboxes: #Set our working Hitbox to the action
             self.parent.root.getAction().hitboxes[new_name] = self.hitbox
-        if self.parent.root.getAction().hitboxes.has_key(old_name): #Set it to the Old one if it exists
-            self.parent.root.getAction().hitboxes[new_name] = self.parent.root.getAction().hitboxes[old_name]
+            if old_name in self.parent.root.getAction(): #Set it to the Old one if it exists
+                self.parent.root.getAction().hitboxes[new_name] = self.parent.root.getAction().hitboxes[old_name]
             del(self.parent.root.getAction().hitboxes[old_name])
         self.parent.root.root.actionModified()
         
@@ -918,7 +918,7 @@ class HitboxPropertiesFrame(ttk.Frame):
         self.parent.root.root.actionModified()
         
     def populateHitboxVariable(self,_variable):
-        if self.subaction.hitbox_vars.has_key(_variable):
+        if _variable in self.subaction.hitbox_vars:
             return self.subaction.hitbox_vars[_variable]
         else: return getattr(self.hitbox,_variable)
         

@@ -2,8 +2,7 @@ from engine.subaction import *
 
 class activateArticle(SubAction):
     subact_group = 'Article'
-    fields = [NodeMap('name','string','activateArticle','')
-              ]
+    fields = [NodeMap('name','string','activateArticle','')]
     
     def __init__(self,_name=''):
         SubAction.__init__(self)
@@ -11,7 +10,7 @@ class activateArticle(SubAction):
         
     def execute(self, _action, _actor):
         SubAction.execute(self, _action, _actor)
-        if _action.articles.has_key(self.name):
+        if self.name in _action.articles:
             _action.articles[self.name].activate()
         
     def getDisplayName(self):

@@ -1,6 +1,6 @@
 from engine.subaction import *
-from Tkinter import *
-from tkColorChooser import askcolor 
+from tkinter import *
+from tkinter import colorchooser
 
 class createMask(SubAction):
     subact_group = 'Behavior'
@@ -51,7 +51,7 @@ class MaskLine(dataSelector.dataLine):
         self.pulse_data.trace('w', self.changeVariable)
         
     def changeColor(self,*args):
-        color = askcolor(self.color_data.get())
+        color = colorchooser.askcolor(self.color_data.get())
         self.color_data.set(color[1])
         
     def changeVariable(self,*args):

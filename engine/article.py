@@ -280,7 +280,7 @@ class DynamicArticle():
     def onCollision(self,_other):
         others_classes = list(map(lambda x :x.__name__,_other.__class__.__bases__)) + [_other.__class__.__name__]
         
-        for classKey,subacts in self.collision_actions.iteritems():
+        for classKey,subacts in self.collision_actions.iter():
             if (classKey in others_classes):
                 for subact in subacts:
                     subact.execute(_other,self)
